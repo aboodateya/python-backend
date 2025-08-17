@@ -1,0 +1,2 @@
+Hello from the context manager!
+This was written using the 'with' statement.
