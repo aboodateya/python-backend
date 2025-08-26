@@ -107,7 +107,6 @@ class PhysicalProduct(Product):
 
 
 
-
 class Person:
     def __init__(self, id, name, email):
         self.id = id

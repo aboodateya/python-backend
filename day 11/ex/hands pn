@@ -1,0 +1,18 @@
+import re
+from datetime import datetime
+import pytz
+
+text = "Contact us at support@example.com or sales@company.org"
+emails = re.findall(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}", text)
+print(emails)
+
+date_str = "2025-08-21 10:00:00"
+fmt = "%Y-%m-%d %H:%M:%S"
+source_tz = pytz.timezone("Asia/Kolkata")
+target_tz = pytz.timezone("Europe/London")
+
+source_time = source_tz.localize(datetime.strptime(date_str, fmt))
+converted_time = source_time.astimezone(target_tz)
+
+print(source_time.strftime(fmt))
+print(converted_time.strftime(fmt))

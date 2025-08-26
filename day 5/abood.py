@@ -42,7 +42,7 @@ print("Word frequencies:", word_freq)
 squares = {x: x**2 for x in range(1, 6)}
 print("Squares dictionary:", squares)
 
-print("\n")
+print(text2.split())
 
 
 

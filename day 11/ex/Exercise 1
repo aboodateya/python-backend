@@ -1,0 +1,13 @@
+import re
+
+def validate_email(email):
+    pattern = r"^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,4}$"
+    return bool(re.match(pattern, email))
+
+print(validate_email("user.name@example.com"))
+print(validate_email("user_name@domain.co"))
+print(validate_email("user-name@domain.info"))
+print(validate_email("username@domain.c"))
+print(validate_email("user@domain.comm"))
+print(validate_email("user@domain"))
+print(validate_email("user@@domain.com"))

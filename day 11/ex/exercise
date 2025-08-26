@@ -1,0 +1,19 @@
+import re
+from datetime import datetime
+import pytz
+
+def validate_email(email):
+    return re.fullmatch(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}", email)
+
+email = "user@example.com"
+if validate_email(email):
+    print("Valid email")
+else:
+    print("Invalid email")
+
+timezones = ["UTC", "Asia/Kolkata", "America/New_York", "Europe/London"]
+current_time = datetime.now(pytz.utc)
+
+for zone in timezones:
+    tz_time = current_time.astimezone(pytz.timezone(zone))
+    print(zone + ":", tz_time.strftime("%Y-%m-%d %H:%M:%S"))

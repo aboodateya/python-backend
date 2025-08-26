@@ -1,0 +1,19 @@
+from datetime import datetime
+import pytz
+
+def convert_timezone(time_str, from_tz, to_tz):
+    fmt = "%Y-%m-%d %H:%M:%S"
+    from_zone = pytz.timezone(from_tz)
+    to_zone = pytz.timezone(to_tz)
+    naive_time = datetime.strptime(time_str, fmt)
+    from_time = from_zone.localize(naive_time)
+    to_time = from_time.astimezone(to_zone)
+    return to_time.strftime(fmt)
+
+time_str = "2023-10-05 14:30:00"
+from_tz = "US/Eastern"
+to_tz = "UTC"
+
+converted = convert_timezone(time_str, from_tz, to_tz)
+print(f"Original time ({from_tz}): {time_str}")
+print(f"Converted time ({to_tz}): {converted}")

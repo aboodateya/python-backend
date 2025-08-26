@@ -1,0 +1,2 @@
+This file was written using a custom-named context manager.
+It uses open_resource() and close_resource() internally.

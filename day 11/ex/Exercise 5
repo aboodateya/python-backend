@@ -1,0 +1,22 @@
+import re
+from datetime import datetime
+import pytz
+
+def parse_log_timestamps(log):
+    pattern = r"\[(\d{2}/[A-Za-z]{3}/\d{4}:\d{2}:\d{2}:\d{2} \+\d{4})\]"
+    timestamps = re.findall(pattern, log)
+    result = []
+    for ts in timestamps:
+        dt = datetime.strptime(ts, "%d/%b/%Y:%H:%M:%S %z")
+        utc_dt = dt.astimezone(pytz.utc)
+        result.append(utc_dt.strftime("%Y-%m-%d %H:%M:%S"))
+    return result
+
+log_text = """
+127.0.0.1 - - [21/Aug/2025:14:55:02 +0000] "GET /index.html HTTP/1.1" 200 1024
+192.168.1.1 - - [22/Aug/2025:09:15:45 +0000] "POST /form HTTP/1.1" 302 512
+"""
+
+converted_timestamps = parse_log_timestamps(log_text)
+for ts in converted_timestamps:
+    print(ts)

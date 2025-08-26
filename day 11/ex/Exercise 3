@@ -1,0 +1,21 @@
+from datetime import datetime, timedelta
+
+birthdate_str = input("Enter your birthdate (YYYY-MM-DD): ")
+birthdate = datetime.strptime(birthdate_str, "%Y-%m-%d")
+
+now = datetime.now()
+
+current_year_birthday = birthdate.replace(year=now.year)
+
+if current_year_birthday < now:
+    next_birthday = current_year_birthday.replace(year=now.year + 1)
+else:
+    next_birthday = current_year_birthday
+
+time_until = next_birthday - now
+
+days = time_until.days
+hours, remainder = divmod(time_until.seconds, 3600)
+minutes, _ = divmod(remainder, 60)
+
+print(days, hours, minutes)

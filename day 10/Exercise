@@ -1,0 +1,87 @@
+import sqlite3
+
+conn = sqlite3.connect("students.db")
+cursor = conn.cursor()
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS students (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    age INTEGER NOT NULL
+)
+""")
+
+def add_student(name, age):
+    cursor.execute("INSERT INTO students (name, age) VALUES (?, ?)", (name, age))
+    conn.commit()
+
+def get_students():
+    cursor.execute("SELECT * FROM students")
+    return cursor.fetchall()
+
+def update_student(student_id, new_name, new_age):
+    cursor.execute("UPDATE students SET name = ?, age = ? WHERE id = ?", (new_name, new_age, student_id))
+    conn.commit()
+
+def delete_student(student_id):
+    cursor.execute("DELETE FROM students WHERE id = ?", (student_id,))
+    conn.commit()
+
+def close():
+    conn.close()
+
+def menu():
+    print("\nStudent Database Manager")
+    print("1. Add Student")
+    print("2. View Students")
+    print("3. Update Student")
+    print("4. Delete Student")
+    print("5. Exit")
+
+def main():
+    while True:
+        menu()
+        choice = input("Select an option: ").strip()
+        if choice == "1":
+            name = input("Enter student name: ").strip()
+            age = input("Enter student age: ").strip()
+            if not age.isdigit():
+                print("Invalid age.")
+                continue
+            add_student(name, int(age))
+            print("Student added.")
+        elif choice == "2":
+            students = get_students()
+            if not students:
+                print("No students found.")
+            else:
+                for s in students:
+                    print(f"ID: {s[0]}, Name: {s[1]}, Age: {s[2]}")
+        elif choice == "3":
+            sid = input("Enter student ID to update: ").strip()
+            if not sid.isdigit():
+                print("Invalid ID.")
+                continue
+            name = input("Enter new name: ").strip()
+            age = input("Enter new age: ").strip()
+            if not age.isdigit():
+                print("Invalid age.")
+                continue
+            update_student(int(sid), name, int(age))
+            print("Student updated.")
+        elif choice == "4":
+            sid = input("Enter student ID to delete: ").strip()
+            if not sid.isdigit():
+                print("Invalid ID.")
+                continue
+            delete_student(int(sid))
+            print("Student deleted.")
+        elif choice == "5":
+            close()
+            print("Goodbye!")
+            break
+        else:
+            print("Invalid choice.")
+
+if __name__ == "__main__":
+    main()
